@@ -2,8 +2,8 @@
 
 import { motion } from "framer-motion";
 
-const stats = [{ value: 3, suffix: "+", label: "Proyectos digitales" }, { value: 5, suffix: "", label: "Áreas creativas" }, { value: 100, suffix: "%", label: "Diseño personalizado" }, { value: 1, suffix: "", label: "Estudio multidisciplinario" }];
+const stats = [{ value: 3, suffix: "+", label: "Proyectos digitales" }, { value: 5, suffix: "", label: "Áreas creativas" }, { value: 100, suffix: "%", label: "Diseño personalizado" }, { value: 1, suffix: "", label: "Estudio multidisciplinario", accessibleLabel: "1 Estudio multidisciplinario" }];
 
 export function Stats() {
-  return <section className="stats"><div className="container stats-grid">{stats.map((stat) => <motion.div key={stat.label} initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }}><strong>{stat.value}{stat.suffix}</strong><p>{stat.label}</p></motion.div>)}</div></section>;
+  return <section className="stats"><div className="container stats-grid">{stats.map((stat) => <motion.div key={stat.label} initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }}><strong aria-label={stat.accessibleLabel}>{stat.value}{stat.suffix}</strong><p>{stat.label}</p></motion.div>)}</div></section>;
 }
