@@ -61,6 +61,17 @@ export const SOCIAL_LINKS = {
 
 Los componentes consumen esos datos, de modo que se pueden ampliar sin modificar la estructura de las secciones.
 
+### Capturas de proyectos
+
+Las tarjetas de proyectos muestran capturas WebP en mockups de navegador y, para el sistema de fidelización, también en un mockup móvil. Los archivos están en `public/projects/`:
+
+- `motherfunkys-desktop.webp`
+- `vive-el-arte-desktop.webp`
+- `fidelizacion-desktop.webp`
+- `fidelizacion-mobile.webp`
+
+Para actualizarlas, reemplaza cada archivo manteniendo el mismo nombre y formato WebP. Si una captura no se puede cargar, la tarjeta conserva un placeholder visual integrado como respaldo.
+
 ### Lista de valores editables
 
 - `data/site.ts`: número de WhatsApp, enlaces sociales y correo.

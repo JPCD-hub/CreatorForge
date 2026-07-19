@@ -1,7 +1,7 @@
 "use client";
 
 import { type ChangeEventHandler, type FormEvent, useEffect, useState } from "react";
-import { ArrowUpRight, CheckCircle2 } from "lucide-react";
+import { AlertCircle, ArrowUpRight, CheckCircle2 } from "lucide-react";
 import { whatsappLink } from "@/data/site";
 import { Reveal } from "./Reveal";
 
@@ -10,6 +10,7 @@ const budgets = ["Menos de $100.000 COP", "$100.000 a $300.000 COP", "$300.000 a
 
 export function ContactForm() {
   const [success, setSuccess] = useState(false);
+  const [error, setError] = useState("");
   const [selectedService, setSelectedService] = useState("");
   const [selectedPlan, setSelectedPlan] = useState("");
   const [projectName, setProjectName] = useState("");
@@ -20,6 +21,7 @@ export function ContactForm() {
       setSelectedService(plan.service);
       setProjectName(plan.title);
       setSuccess(false);
+      setError("");
     };
     window.addEventListener("creator-forge-plan", selectPlan);
     return () => window.removeEventListener("creator-forge-plan", selectPlan);
@@ -27,13 +29,19 @@ export function ContactForm() {
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const form = event.currentTarget;
-    if (!form.checkValidity()) { form.reportValidity(); return; }
+    if (!form.checkValidity()) {
+      setSuccess(false);
+      setError("Completa los campos obligatorios y revisa el correo antes de continuar.");
+      form.reportValidity();
+      return;
+    }
     const data = new FormData(form);
     const message = `Hola Creator Forge, quiero solicitar una cotización.\n\n*Nombre:* ${data.get("name")}\n*Correo:* ${data.get("email")}\n*WhatsApp:* ${data.get("phone")}\n*Proyecto:* ${data.get("project")}\n*Plan inicial:* ${data.get("plan") || "No seleccionado"}\n*Servicio:* ${data.get("service")}\n*Presupuesto:* ${data.get("budget")}\n*Fecha esperada:* ${data.get("date")}\n*Descripción:* ${data.get("description")}`;
+    setError("");
     setSuccess(true);
     window.open(whatsappLink(message), "_blank", "noopener,noreferrer");
   };
-  return <section className="section contact" id="contacto"><div className="container contact-grid"><Reveal><p className="eyebrow"><span />CONTACTO / COTIZACIÓN</p><h2>Cuéntanos qué quieres <em>construir</em></h2><p className="contact-intro">Cuanto más nos cuentes, mejor podremos entender la idea y preparar el próximo paso.</p><div className="contact-notes"><span>Respuesta por WhatsApp</span><span>Proyectos a medida</span><span>Sin compromiso</span></div></Reveal><Reveal delay={0.1}><form className="contact-form" onSubmit={handleSubmit}><input type="hidden" name="plan" value={selectedPlan} /><div className="form-grid"><Field label="Nombre" name="name" required /><Field label="Correo" name="email" type="email" required /><Field label="WhatsApp" name="phone" type="tel" required /><Field label="Nombre del proyecto" name="project" value={projectName} onChange={(event) => setProjectName(event.target.value)} required /><Select label="Tipo de servicio" name="service" options={services} value={selectedService} onChange={(event) => setSelectedService(event.target.value)} /><Select label="Presupuesto estimado" name="budget" options={budgets} /><Field label="Fecha esperada" name="date" type="date" required /></div><label className="form-field full"><span>Descripción del proyecto</span><textarea name="description" rows={4} required placeholder="Cuéntanos qué tienes en mente, qué necesitas y para quién es." /></label><button className="button form-submit" type="submit">Enviar y abrir WhatsApp <ArrowUpRight size={17} /></button>{success && <p className="form-success" role="status"><CheckCircle2 size={17} /> Tu mensaje está listo. Se abrió WhatsApp en una nueva pestaña.</p>}</form></Reveal></div></section>;
+  return <section className="section contact" id="contacto"><div className="container contact-grid"><Reveal><p className="eyebrow"><span />CONTACTO / COTIZACIÓN</p><h2>Cuéntanos qué quieres <em>construir</em></h2><p className="contact-intro">Cuanto más nos cuentes, mejor podremos entender la idea y preparar el próximo paso.</p><div className="contact-notes"><span>Respuesta por WhatsApp</span><span>Proyectos a medida</span><span>Sin compromiso</span></div></Reveal><Reveal delay={0.1}><form className="contact-form" onSubmit={handleSubmit} noValidate><input type="hidden" name="plan" value={selectedPlan} />{selectedPlan && <p className="selected-plan" role="status">Plan seleccionado: <strong>{selectedPlan}</strong></p>}<div className="form-grid"><Field label="Nombre" name="name" required /><Field label="Correo" name="email" type="email" required /><Field label="WhatsApp" name="phone" type="tel" required /><Field label="Nombre del proyecto" name="project" value={projectName} onChange={(event) => setProjectName(event.target.value)} required /><Select label="Tipo de servicio" name="service" options={services} value={selectedService} onChange={(event) => setSelectedService(event.target.value)} /><Select label="Presupuesto estimado" name="budget" options={budgets} /><Field label="Fecha esperada" name="date" type="date" required /></div><label className="form-field full"><span>Descripción del proyecto</span><textarea name="description" rows={4} required placeholder="Cuéntanos qué tienes en mente, qué necesitas y para quién es." /></label><button className="button form-submit" type="submit">Enviar y abrir WhatsApp <ArrowUpRight size={17} /></button>{error && <p className="form-error" role="alert"><AlertCircle size={17} /> {error}</p>}{success && <p className="form-success" role="status"><CheckCircle2 size={17} /> Tu mensaje está listo. Se abrió WhatsApp en una nueva pestaña.</p>}</form></Reveal></div></section>;
 }
 
 function Field({ label, name, type = "text", required = false, value, onChange }: { label: string; name: string; type?: string; required?: boolean; value?: string; onChange?: ChangeEventHandler<HTMLInputElement> }) {

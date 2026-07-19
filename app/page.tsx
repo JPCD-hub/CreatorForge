@@ -11,7 +11,8 @@ import { Process } from "@/components/Process";
 import { Projects } from "@/components/Projects";
 import { Services } from "@/components/Services";
 import { Stats } from "@/components/Stats";
+import { WhatsAppFloat } from "@/components/WhatsAppFloat";
 
 export default function Home() {
-  return <main><Navbar /><Hero /><Marquee /><Projects /><Services /><Positioning /><Process /><Stats /><About /><Pricing /><ContactForm /><FinalCTA /><Footer /></main>;
+  return <main><Navbar /><Hero /><Marquee /><Projects /><Services /><Positioning /><Process /><Stats /><About /><Pricing /><ContactForm /><FinalCTA /><Footer /><WhatsAppFloat /></main>;
 }

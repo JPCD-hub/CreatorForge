@@ -2,6 +2,7 @@
 
 import { motion, useReducedMotion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
+import Image from "next/image";
 import type { projects } from "@/data/projects";
 
 type Project = (typeof projects)[number];
@@ -12,7 +13,15 @@ export function ProjectCard({ project }: { project: Project }) {
 }
 
 function Mockup({ type }: { type: Project["type"] }) {
-  if (type === "funk") return <div className="mockup-funk"><p>MOTHER<br /><i>FUNKYS</i></p><div className="funk-disc" /><small>LIVE / SOUL / GROOVE</small></div>;
-  if (type === "art") return <div className="mockup-art"><p>VIVE<br /><i>EL ARTE</i></p><div className="art-sun" /><div className="art-strip">CULTURA EN MOVIMIENTO</div></div>;
-  return <div className="mockup-system"><div className="system-top"><span>VIVE EL ARTE</span><i /></div><strong>Tu comunidad<br />se mueve contigo.</strong><div className="system-bars"><i /><i /><i /></div><small>BOLETA DIGITAL<br /><i>QR · ASISTENCIAS · BENEFICIOS</i></small></div>;
+  if (type === "funk") return <BrowserMockup src="/projects/motherfunkys-desktop.webp" label="Captura del sitio MotherFunkys" fallback="MOTHER FUNKYS" />;
+  if (type === "art") return <BrowserMockup src="/projects/vive-el-arte-desktop.webp" label="Captura del sitio Vive el Arte" fallback="VIVE EL ARTE" />;
+  return <div className="system-mockups"><BrowserMockup src="/projects/fidelizacion-desktop.webp" label="Captura de escritorio del sistema de fidelización" fallback="BOLETA DIGITAL" /><PhoneMockup src="/projects/fidelizacion-mobile.webp" /></div>;
+}
+
+function BrowserMockup({ src, label, fallback }: { src: string; label: string; fallback: string }) {
+  return <div className="browser-mockup"><div className="browser-chrome"><span /><span /><span /><i /></div><div className="browser-screen"><Image src={src} alt={label} fill sizes="(max-width: 760px) 85vw, 360px" onError={(event) => { event.currentTarget.style.display = "none"; }} /><div className="project-image-fallback"><span>CREATOR FORGE / ARCHIVO</span><strong>{fallback}</strong></div></div></div>;
+}
+
+function PhoneMockup({ src }: { src: string }) {
+  return <div className="phone-mockup"><i /><div><Image src={src} alt="Captura móvil del sistema de fidelización" fill sizes="120px" onError={(event) => { event.currentTarget.style.display = "none"; }} /></div></div>;
 }
