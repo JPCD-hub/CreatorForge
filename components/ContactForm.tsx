@@ -21,15 +21,12 @@ export function ContactForm() {
   const [success, setSuccess] = useState(false);
 
   useEffect(() => {
-    const selectPlan = (event: Event) => {
-      const plan = (event as CustomEvent<{ title: string; service: string }>).detail;
-      setValues((current) => ({ ...current, plan: plan.title, service: plan.service, project: current.project || plan.title }));
-      setErrors({});
-      setReviewing(false);
-      setSuccess(false);
-    };
-    window.addEventListener("creator-forge-plan", selectPlan);
-    return () => window.removeEventListener("creator-forge-plan", selectPlan);
+    const params = new URLSearchParams(window.location.search);
+    const plan = params.get("plan");
+    const service = params.get("service");
+    if (!plan || !service || !services.includes(service)) return;
+    setValues((current) => ({ ...current, plan, service, project: current.project || plan }));
+    window.history.replaceState(null, "", "#contacto");
   }, []);
 
   const change = (event: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
