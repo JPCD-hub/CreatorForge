@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import { Logo } from "./Logo";
 import { ReadingProgress } from "./ReadingProgress";
 
-const links = [["Inicio", "#inicio"], ["Proyectos", "#proyectos"], ["Servicios", "#servicios"], ["Proceso", "#proceso"], ["Nosotros", "#nosotros"], ["Contacto", "#contacto"]] as const;
+const links = [["Inicio", "#inicio"], ["Proyectos", "#proyectos"], ["Servicios", "#servicios"], ["Proceso", "#proceso"], ["Nosotros", "#nosotros"], ["Planes", "#planes"], ["Contacto", "#contacto"]] as const;
 
 export function Navbar() {
   const [open, setOpen] = useState(false);
