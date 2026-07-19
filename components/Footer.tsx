@@ -2,7 +2,7 @@ import { Github, Instagram, Mail, MessageCircle, Music2 } from "lucide-react";
 import { SOCIAL_LINKS } from "@/data/site";
 import { Logo } from "./Logo";
 
-const navigation = ["Inicio", "Proyectos", "Servicios", "Proceso", "Nosotros", "Contacto"];
+const navigation = ["Inicio", "Proyectos", "Servicios", "Proceso", "Nosotros", "Planes", "Contacto"];
 const services = ["Diseño visual", "Desarrollo web", "Branding", "Inteligencia artificial", "TikTok Live", "Productos digitales"];
 
 export function Footer() {
