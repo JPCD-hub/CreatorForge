@@ -1,0 +1,5 @@
+export const projects = [
+  { number: "01", title: "MotherFunkys", categories: "Música · Desarrollo web · Identidad visual", description: "Experiencia digital desarrollada para una banda de funk, con una identidad visual enérgica, navegación inmersiva y enfoque en presentaciones, música y comunidad.", href: "https://jpcd-hub.github.io/Motherfunkys/", action: "Visitar proyecto", type: "funk" },
+  { number: "02", title: "Vive el Arte", categories: "Arte · Eventos · Portafolio digital", description: "Plataforma visual para presentar eventos artísticos, artistas, programación y experiencias culturales en un formato accesible y atractivo.", href: "https://jpcd-hub.github.io/portafolio-vive-el-arte/#inicio", action: "Visitar proyecto", type: "art" },
+  { number: "03", title: "Vive el Arte — Sistema de fidelización", categories: "Producto digital · Fidelización · Eventos", description: "Sistema digital para registrar participantes, fortalecer la comunidad y crear una experiencia de fidelización alrededor de eventos artísticos.", href: "https://jpcd-hub.github.io/live-vive-el-arte/#personas", action: "Visitar sistema", type: "system" },
+] as const;
