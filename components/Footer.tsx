@@ -11,5 +11,5 @@ export function Footer() {
 }
 
 function Social({ href, label, children }: { href: string; label: string; children: React.ReactNode }) {
-  return <a href={href} target={href.startsWith("http") ? "_blank" : undefined} rel={href.startsWith("http") ? "noreferrer" : undefined} aria-label={label}>{children}</a>;
+  return <a href={href} target={href.startsWith("http") ? "_blank" : undefined} rel={href.startsWith("http") ? "noopener noreferrer" : undefined} aria-label={label}>{children}</a>;
 }
