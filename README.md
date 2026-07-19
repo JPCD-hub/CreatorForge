@@ -16,7 +16,7 @@ npm install
 npm run dev
 ```
 
-Abre `http://localhost:3000` en el navegador.
+Abre `http://localhost:3000` en el navegador. Esta dirección solo se usa durante el desarrollo local; el sitio publicado no depende de ella.
 
 Para comprobar la versión de producción:
 
@@ -61,13 +61,46 @@ export const SOCIAL_LINKS = {
 
 Los componentes consumen esos datos, de modo que se pueden ampliar sin modificar la estructura de las secciones.
 
+### Lista de valores editables
+
+- `data/site.ts`: número de WhatsApp, enlaces sociales y correo.
+- `data/projects.ts`: proyectos destacados y sus enlaces externos.
+- `data/services.ts`: catálogo de servicios.
+- `data/pricing.ts`: planes, precios y elementos incluidos.
+- `app/layout.tsx`: dominio canónico y metadata SEO. Actualiza `metadataBase` cuando se asigne el dominio final en Vercel.
+
+## Subir cambios a GitHub
+
+El repositorio remoto ya está configurado como `https://github.com/JPCD-hub/CreatorForge`. Para publicar cambios posteriores:
+
+```bash
+git status
+git add .
+git commit -m "chore: prepara despliegue en Vercel"
+git push origin main
+```
+
 ## Despliegue
 
 ### Vercel
 
-1. Sube el repositorio a GitHub.
-2. Importa el repositorio en [Vercel](https://vercel.com/new).
-3. Vercel detectará Next.js y ejecutará el build automáticamente.
+El proyecto no necesita variables de entorno ni un servidor propio para su versión actual. Está configurado con `output: "export"`, por lo que Vercel publicará el resultado estático generado en `out/`.
+
+1. Confirma que `npm run build` termina correctamente en local.
+2. Sube la rama `main` a GitHub.
+3. Importa `JPCD-hub/CreatorForge` desde [Vercel](https://vercel.com/new).
+4. Conserva el framework detectado, `Next.js`, y los comandos predeterminados: `npm install` y `npm run build`.
+5. Pulsa **Deploy**. Cada `git push` posterior a `main` generará un despliegue de producción.
+
+También se puede publicar desde la CLI de Vercel:
+
+```bash
+npm install -g vercel
+vercel
+vercel --prod
+```
+
+No es necesario configurar variables de entorno en Vercel actualmente. Cuando se añadan servicios externos o un backend, sus secretos deben crearse en el panel de Vercel y nunca incluirse en Git.
 
 ### Sitio estático
 
