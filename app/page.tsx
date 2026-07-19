@@ -14,5 +14,6 @@ import { Stats } from "@/components/Stats";
 import { WhatsAppFloat } from "@/components/WhatsAppFloat";
 
 export default function Home() {
-  return <main><Navbar /><Hero /><Marquee /><Projects /><Services /><Positioning /><Process /><Stats /><About /><Pricing /><ContactForm /><FinalCTA /><Footer /><WhatsAppFloat /></main>;
+  const serviceSchema = { "@context": "https://schema.org", "@type": "ProfessionalService", name: "Creator Forge", description: "Estudio creativo independiente que desarrolla identidades, páginas web y productos digitales para artistas, eventos, creadores y negocios.", url: "https://creator-forge-six.vercel.app", areaServed: { "@type": "Country", name: "Colombia" }, sameAs: ["https://github.com/jpcd-hub"], hasOfferCatalog: { "@type": "OfferCatalog", name: "Servicios Creator Forge", itemListElement: ["Diseño visual", "Desarrollo web", "Branding", "Inteligencia artificial", "TikTok Live", "Productos digitales"].map((name) => ({ "@type": "Offer", itemOffered: { "@type": "Service", name } })) } };
+  return <><a className="skip-link" href="#contenido">Saltar al contenido</a><Navbar /><main id="contenido"><Hero /><Marquee /><Projects /><Services /><Positioning /><Process /><Stats /><About /><Pricing /><ContactForm /><FinalCTA /><Footer /><WhatsAppFloat /></main><script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }} /></>;
 }
