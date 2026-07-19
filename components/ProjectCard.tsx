@@ -15,7 +15,7 @@ export function ProjectCard({ project }: { project: Project }) {
 function Mockup({ type }: { type: Project["type"] }) {
   if (type === "funk") return <BrowserMockup src="/projects/motherfunkys-desktop.webp" label="Captura del sitio MotherFunkys" fallback="MOTHER FUNKYS" />;
   if (type === "art") return <BrowserMockup src="/projects/vive-el-arte-desktop.webp" label="Captura del sitio Vive el Arte" fallback="VIVE EL ARTE" />;
-  return <div className="system-mockups"><BrowserMockup src="/projects/fidelizacion-desktop.webp" label="Captura de escritorio del sistema de fidelización" fallback="BOLETA DIGITAL" /><PhoneMockup src="/projects/fidelizacion-mobile.webp" /></div>;
+  return <><div className="system-mockups"><BrowserMockup src="/projects/fidelizacion-desktop.webp" label="Captura de escritorio del sistema de fidelización" fallback="BOLETA DIGITAL" /><PhoneMockup src="/projects/fidelizacion-mobile.webp" /></div><div className="system-capabilities" aria-label="Capacidades del sistema"><span>Registro de asistentes</span><span>Control mediante QR</span><span>Boleta digital</span><span>Administración de eventos</span></div></>;
 }
 
 function BrowserMockup({ src, label, fallback }: { src: string; label: string; fallback: string }) {
