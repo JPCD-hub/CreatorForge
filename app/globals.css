@@ -120,6 +120,7 @@ html { overflow-x:clip; }
 .form-field input:focus-visible,.form-field select:focus-visible,.form-field textarea:focus-visible { outline:2px solid rgba(255,106,0,.85); outline-offset:4px; border-color:var(--accent); }.form-error { font-size:12px; line-height:1.45; }.price-details dt { color:#a0a0a0; font-size:11px; }.price-details dd { font-size:12px; }.footer-bottom { color:#929292; font-size:10px; }.socials a { width:40px; height:40px; position:relative; }.menu-button { width:40px; height:40px; }.contact h2 { letter-spacing:-.055em; }.contact-intro { font-size:16px; }.final-cta .button svg { width:17px; height:17px; }
 @media (max-width: 1000px) { .project-card { grid-template-columns:1fr 1fr; }.project-visual { min-height:470px; }.project-info { padding:32px 30px; } }
 @media (max-width: 760px) { .project-card { min-height:0; }.project-visual { min-height:300px; }.project-info { padding:26px 20px; }.case-blocks>div { grid-template-columns:74px 1fr; gap:10px; padding:12px 0; }.project-actions { gap:16px; }.project-actions button { margin-left:0; }.contact h2 { font-size:clamp(2.45rem,10vw,3.1rem); }.contact-intro { font-size:15px; }.footer-bottom { font-size:10px; } }
+.project-card { grid-template-columns:repeat(2,minmax(0,1fr)); }
 @media (prefers-reduced-motion: reduce) { .forge-contour { animation:none; }.button svg,.text-link svg,.project-actions svg,.footer-quote svg,.logo,.logo svg { transition:none!important; } }
 
 /* Motion and touch controls remain deliberate on small or reduced-capability devices. */
