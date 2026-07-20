@@ -28,6 +28,7 @@ async function expectNoSeriousAxe(page: Page, selector: string) {
 }
 
 test("every target viewport has no horizontal scroll and captures a full-page reference", async ({ page }, testInfo) => {
+  await page.emulateMedia({ reducedMotion: "reduce" });
   for (const [width, height] of viewports) {
     await page.setViewportSize({ width, height });
     await page.goto("/");
