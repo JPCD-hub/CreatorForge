@@ -54,6 +54,14 @@ test("equivalent mobile devices remain scroll-safe", async ({ browser }) => {
   }
 });
 
+test("project visuals retain a consistent desktop width", async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.goto("/");
+  const widths = await page.locator(".project-visual").evaluateAll((elements) => elements.map((element) => element.getBoundingClientRect().width));
+  expect(widths).toHaveLength(3);
+  expect(widths.every((width) => Math.abs(width - widths[0]) < 1)).toBe(true);
+});
+
 test("mobile menu traps keyboard focus, locks scroll, closes on Escape, navigation, and resize", async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto("/");
