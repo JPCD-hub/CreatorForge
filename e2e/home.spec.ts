@@ -4,6 +4,7 @@ import AxeBuilder from "@axe-core/playwright";
 const viewports = [[320, 568], [360, 800], [375, 667], [390, 844], [393, 852], [412, 915], [430, 932], [768, 1024], [1024, 768], [1280, 800], [1440, 900], [1920, 1080]] as const;
 const deviceNames = ["iPhone SE", "iPhone 13", "iPhone 15 Pro", "Pixel 7", "Galaxy S9+", "iPad Mini"] as const;
 const plans = ["Forge Start", "Forge Landing", "Forge Web", "Forge Creator", "Forge Custom"];
+const planServices = ["Diseño visual", "Desarrollo web", "Desarrollo web", "Branding", "Productos digitales"];
 
 async function assertNoHorizontalScroll(page: Page) {
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= document.documentElement.clientWidth)).toBe(true);
@@ -32,6 +33,12 @@ test("every target viewport has no horizontal scroll and captures a full-page re
     await page.goto("/");
     await assertNoHorizontalScroll(page);
     await expect(page.locator(".whatsapp-float")).toBeVisible();
+    if (width <= 768) {
+      const menuBox = await page.locator(".menu-button").boundingBox();
+      expect(menuBox?.width).toBeGreaterThanOrEqual(44);
+      expect(menuBox?.height).toBeGreaterThanOrEqual(44);
+      expect(Number.parseFloat(await page.locator("#contact-name").evaluate((element) => getComputedStyle(element).fontSize))).toBeGreaterThanOrEqual(16);
+    }
     await page.screenshot({ path: testInfo.outputPath(`viewport-${width}x${height}.png`), fullPage: true });
   }
 });
@@ -98,7 +105,9 @@ test("all project dialogs are modal, inert the page, and restore focus", async (
     await expect(page.getByRole("dialog")).toBeVisible();
     await expect(page.locator("main")).toHaveAttribute("inert", "");
     await expect(page.locator(".case-modal-close")).toBeFocused();
-    await page.keyboard.press("Escape");
+    await page.getByRole("dialog").click();
+    await expect(page.getByRole("dialog")).toBeVisible();
+    await page.locator(".case-modal-backdrop").click({ position: { x: 4, y: 4 } });
     await expect(page.getByRole("dialog")).toHaveCount(0);
     await expect(button).toBeFocused();
   }
@@ -126,16 +135,22 @@ test("the five plan links preserve selection and the quote flow validates safely
     await page.getByRole("link", { name: "Solicitar este plan", exact: true }).nth(index).click();
     await expect(page).toHaveURL(/#contacto$/);
     await expect(page.getByText(`Cotizando: ${plans[index]}`)).toBeVisible();
-    await expect(page.locator("#contact-service")).not.toHaveValue("");
+    await expect(page.locator("#contact-service")).toHaveValue(planServices[index]);
     await page.getByRole("button", { name: "Quitar plan" }).click();
     await expect(page.getByText(`Cotizando: ${plans[index]}`)).toHaveCount(0);
   }
 
   await page.goto("/#contacto");
+  await expect(page.locator("#contact-website")).toHaveAttribute("autocomplete", "url");
+  await expect(page.locator("#contact-website")).toHaveAttribute("placeholder", "https://tusitio.com");
   await page.locator(".form-submit").click();
   await expect(page.locator("#contact-name")).toBeFocused();
   await expect(page.locator(".form-error")).toBeVisible();
+  await page.locator("#contact-website").fill("sitio-invalido");
   await fillValidQuote(page);
+  await page.locator(".form-submit").click();
+  await expect(page.locator("#contact-website")).toBeFocused();
+  await page.locator("#contact-website").fill("https://ejemplo.com");
   await page.locator(".form-submit").click();
   await expect(page.getByText("Todo listo para revisar.")).toBeFocused();
   await expect(page.getByText("ana@example.com")).toBeVisible();
@@ -157,6 +172,10 @@ test("footer Plans anchor, metadata, 404, and serious axe violations are covered
   await expect(page.locator("#planes h2")).toBeVisible();
   await expect(page.locator('link[rel="canonical"]')).toHaveAttribute("href", "https://creator-forge-six.vercel.app");
   await expect(page.locator('meta[property="og:image"]')).toHaveCount(1);
+  await expect(page.getByRole("region", { name: "Capacidades y áreas de trabajo de Creator Forge" })).toBeVisible();
+  await expect(page.locator(".marquee-track")).toHaveAttribute("aria-hidden", "true");
+  await expect(page.locator(".final-cta").getByRole("link", { name: /Hablar por WhatsApp/ })).toHaveCount(1);
+  await expect(page.locator(".final-cta a[href='#contacto']")).toHaveCount(0);
   await expectNoSeriousAxe(page, "#planes");
   const externalProjects = page.locator('.project-actions a[target="_blank"]');
   await expect(externalProjects).toHaveCount(3);
