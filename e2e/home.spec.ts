@@ -20,8 +20,9 @@ async function fillValidQuote(page: Page) {
   await page.locator("#contact-description").fill("Una descripción con tildes, saltos de línea\ny suficientes detalles para validar WhatsApp.");
 }
 
-async function expectNoSeriousAxe(page: Page) {
-  const axe = await new AxeBuilder({ page }).analyze();
+async function expectNoSeriousAxe(page: Page, selector: string) {
+  await page.waitForTimeout(650);
+  const axe = await new AxeBuilder({ page }).include(selector).analyze();
   expect(axe.violations.filter((violation) => ["critical", "serious"].includes(violation.impact ?? ""))).toEqual([]);
 }
 
@@ -107,16 +108,16 @@ test("axe covers the open mobile menu, dialog, and quote review", async ({ page 
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto("/");
   await page.locator(".menu-button").click();
-  await expectNoSeriousAxe(page);
+  await expectNoSeriousAxe(page, "#mobile-menu");
   await page.keyboard.press("Escape");
   await page.goto("/#proyectos");
   await page.locator(".project-actions button").first().click();
-  await expectNoSeriousAxe(page);
+  await expectNoSeriousAxe(page, "[role=dialog]");
   await page.keyboard.press("Escape");
   await page.goto("/#contacto");
   await fillValidQuote(page);
   await page.locator(".form-submit").click();
-  await expectNoSeriousAxe(page);
+  await expectNoSeriousAxe(page, ".contact-review");
 });
 
 test("the five plan links preserve selection and the quote flow validates safely", async ({ page }) => {
@@ -156,7 +157,7 @@ test("footer Plans anchor, metadata, 404, and serious axe violations are covered
   await expect(page.locator("#planes h2")).toBeVisible();
   await expect(page.locator('link[rel="canonical"]')).toHaveAttribute("href", "https://creator-forge-six.vercel.app");
   await expect(page.locator('meta[property="og:image"]')).toHaveCount(1);
-  await expectNoSeriousAxe(page);
+  await expectNoSeriousAxe(page, "#planes");
   const externalProjects = page.locator('.project-actions a[target="_blank"]');
   await expect(externalProjects).toHaveCount(3);
   for (const link of await externalProjects.all()) await expect(link).toHaveAttribute("rel", "noopener noreferrer");

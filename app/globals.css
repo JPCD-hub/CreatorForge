@@ -129,3 +129,8 @@ html { overflow-x:clip; }
 @media (max-width: 760px) { .pricing-grid { grid-template-columns:1fr; }.marquee { padding-right:100px; }.marquee-track { animation-duration:52s; }.marquee-toggle { right:4px; padding:0 8px; }.marquee-toggle span { font-size:9px; } }
 @media (hover:none), (pointer:coarse) { .project-card:hover { border-color:rgba(255,255,255,.12); box-shadow:none; }.project-card:hover .browser-mockup,.service-card:hover svg { transform:none; }.service-card:hover { background:var(--background); box-shadow:none; }.service-card:hover::after { transform:scaleX(0); }.service-card:hover .service-example { opacity:0; transform:translateY(4px); }.service-card:hover .service-arrow { opacity:1; } }
 .button:not(.button-ghost) { color:#050505; }.visual-art .project-number { color:#191018; }
+
+/* Keep the CF mark legible: the hero should read as a symbol, not as a dark block. */
+.forge-monogram { width:250px; height:250px; color:rgba(255,106,0,.42); transform:translate(-50%,-50%); filter:none; }.forge-monogram path:first-child { fill:none; stroke:currentColor; stroke-width:1.6; stroke-linejoin:round; }.forge-monogram path:nth-child(2) { fill:none; stroke:rgba(255,255,255,.2); stroke-width:1.1; stroke-linejoin:round; }.forge-monogram .forge-contour { display:none; }
+.orbit-two { width:360px; height:230px; border-radius:50%; }
+.about-card h3 i,.about-card em { color:#111; }
