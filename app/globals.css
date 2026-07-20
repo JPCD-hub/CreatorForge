@@ -105,7 +105,7 @@ section[id] { scroll-margin-top:96px; }
 @media (prefers-reduced-motion: reduce) { .marquee-track { animation:none!important; }.forge-visual { transform:none!important; }.spark { display:none; }.project-card:hover .browser-mockup,.service-card:focus svg,.service-card:hover svg { transform:none; } }
 .browser-screen>img,.phone-mockup img { position:absolute!important; inset:0; z-index:1; width:100%; height:100%; }
 @media (max-width: 1100px) { .pricing-grid { grid-template-columns:repeat(2,1fr); } }
-section[id] { scroll-margin-top:-30px; }
+section[id] { scroll-margin-top:96px; }
 @media (max-width: 900px) { .nav-links,.nav-cta { display:none; }.menu-button { display:grid; place-items:center; margin-left:auto; width:34px; height:34px; border:0; background:transparent; color:#fff; }.menu-button svg { width:21px; }.mobile-menu { display:grid; gap:4px; position:absolute; top:61px; left:0; right:0; padding:12px; border:1px solid var(--border); background:rgba(16,16,16,.97); backdrop-filter:blur(16px); }.mobile-menu a:not(.button) { padding:11px; color:#ccc; font-size:14px; }.mobile-menu .button { margin-top:7px; } }
 @media (max-width: 760px) { section[id] { scroll-margin-top:82px; } }
 
@@ -120,3 +120,12 @@ html { overflow-x:clip; }
 @media (max-width: 1000px) { .project-card { grid-template-columns:1fr 1fr; }.project-visual { min-height:470px; }.project-info { padding:32px 30px; } }
 @media (max-width: 760px) { .project-card { min-height:0; }.project-visual { min-height:300px; }.project-info { padding:26px 20px; }.case-blocks>div { grid-template-columns:74px 1fr; gap:10px; padding:12px 0; }.project-actions { gap:16px; }.project-actions button { margin-left:0; }.contact h2 { font-size:clamp(2.45rem,10vw,3.1rem); }.contact-intro { font-size:15px; }.footer-bottom { font-size:10px; } }
 @media (prefers-reduced-motion: reduce) { .forge-contour { animation:none; }.button svg,.text-link svg,.project-actions svg,.footer-quote svg,.logo,.logo svg { transition:none!important; } }
+
+/* Motion and touch controls remain deliberate on small or reduced-capability devices. */
+.marquee { padding-right:116px; }.marquee-toggle { position:absolute; top:50%; right:8px; display:inline-flex; align-items:center; justify-content:center; gap:6px; width:auto; min-width:44px; height:44px; padding:0 10px; overflow:visible; clip-path:none; transform:translateY(-50%); border:1px solid rgba(13,13,13,.35); color:#fff; background:#151515; font-family:var(--font-space),sans-serif; font-size:10px; font-weight:600; }.marquee-toggle svg { width:14px; height:14px; }.marquee-toggle:focus { color:#fff; background:#151515; }.marquee-toggle:disabled { cursor:default; opacity:.72; }.marquee:focus-within .marquee-track,.marquee.is-paused .marquee-track,.marquee:hover .marquee-track { animation-play-state:paused; }html[data-motion-paused="true"] .forge-contour { animation-play-state:paused; }
+.selected-plan { justify-content:flex-start; }.selected-plan button { display:inline-flex; align-items:center; gap:4px; min-height:32px; margin-left:auto; padding:0 7px; border:0; color:#f0c3a4; background:transparent; font-size:11px; }.selected-plan button:hover { color:#fff; }.selected-plan button svg { width:13px; height:13px; }
+.form-field input,.form-field select,.form-field textarea { font-size:16px; }
+.case-modal-backdrop { padding:max(16px,env(safe-area-inset-top)) max(16px,env(safe-area-inset-right)) max(16px,env(safe-area-inset-bottom)) max(16px,env(safe-area-inset-left)); }
+@media (max-width: 760px) { .pricing-grid { grid-template-columns:1fr; }.marquee { padding-right:100px; }.marquee-track { animation-duration:52s; }.marquee-toggle { right:4px; padding:0 8px; }.marquee-toggle span { font-size:9px; } }
+@media (hover:none), (pointer:coarse) { .project-card:hover { border-color:rgba(255,255,255,.12); box-shadow:none; }.project-card:hover .browser-mockup,.service-card:hover svg { transform:none; }.service-card:hover { background:var(--background); box-shadow:none; }.service-card:hover::after { transform:scaleX(0); }.service-card:hover .service-example { opacity:0; transform:translateY(4px); }.service-card:hover .service-arrow { opacity:1; } }
+.button:not(.button-ghost) { color:#050505; }.visual-art .project-number { color:#191018; }

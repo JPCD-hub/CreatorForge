@@ -19,3 +19,9 @@ out/
 Thumbs.db
 
 .vercel
+
+# Test and performance artifacts
+playwright-report/
+test-results/
+reports/lighthouse/
+.lighthouseci/
